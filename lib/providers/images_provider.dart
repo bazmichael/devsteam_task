@@ -1,16 +1,15 @@
 import 'dart:convert';
-
-import 'file:///C:/Users/Acer/IdeaProjects/devsteam/lib/models/unspash_response_model.dart';
 import 'package:devsteam/models/photo_vm.dart';
+import 'package:devsteam/models/unsplash_response_model.dart';
 import 'package:http/http.dart';
 
 class ImagesProvider {
-  final Client _httpClient;
+  final Client _httpClient = Client();
   static const token =
       'cf49c08b444ff4cb9e4d126b7e9f7513ba1ee58de7906e4360afc1a33d1bf4c0';
   final _images = <PhotoViewModel>[];
 
-  ImagesProvider(this._httpClient);
+  ImagesProvider();
 
   Future<void> loadPhotos() async {
     final response = await _getUnsplashImage(token);
