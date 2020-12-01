@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'package:devsteam/models/photo_vm.dart';
 import 'package:devsteam/models/unsplash_response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
-class ImagesProvider {
+class HttpService {
   final Client _httpClient = Client();
+
   static const token =
       'cf49c08b444ff4cb9e4d126b7e9f7513ba1ee58de7906e4360afc1a33d1bf4c0';
-  final _images = <PhotoViewModel>[];
 
-  ImagesProvider();
-
-  Future<void> loadPhotos() async {
+  Future<List<PhotoViewModel>> loadPhotos() async {
     final response = await _getUnsplashImage(token);
-    _images.addAll(_mapResponseToVm(response.photos));
+    return _mapResponseToVm(response.photos);
   }
 
   Future<UnsplashResponse> _getUnsplashImage(String token,
@@ -29,11 +28,34 @@ class ImagesProvider {
     }
   }
 
+
   List<PhotoViewModel> _mapResponseToVm(List<UnsplashPhoto> photos) {
     return photos.map((e) => PhotoViewModel(
         author: e.user.name,
-        fullImage: e.urls.raw,
-        thumbImage: e.urls.raw,
+        fullImage: e.urls.small,
+        thumbImage: e.urls.small,
         title: e.altDescription)).toList(growable: false);
+  }
+}
+class ImagesProvider with ChangeNotifier {
+  final _httpService = HttpService();
+  final _images = <PhotoViewModel>[];
+
+  List<PhotoViewModel> get images => _images;
+
+  ImagesProvider() {
+   getPhotos();
+  }
+
+  Future<void> getPhotos() async {
+    final photos = await _httpService.loadPhotos();
+    _images.addAll(photos);
+    notifyListeners();
+  }
+
+  Future<bool> refresh() async{
+    _images.clear();
+    getPhotos();
+    return true;
   }
 }
