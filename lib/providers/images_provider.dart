@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:devsteam/unspash_response_model.dart';
+import 'file:///C:/Users/Acer/IdeaProjects/devsteam/lib/models/unspash_response_model.dart';
+import 'package:devsteam/models/photo_vm.dart';
 import 'package:http/http.dart';
 
 class ImagesProvider {
@@ -36,13 +37,4 @@ class ImagesProvider {
         thumbImage: e.urls.raw,
         title: e.altDescription)).toList(growable: false);
   }
-}
-
-class PhotoViewModel {
-  final String thumbImage;
-  final String fullImage;
-  final String title;
-  final String author;
-
-  PhotoViewModel({this.title, this.author, this.thumbImage, this.fullImage});
 }
