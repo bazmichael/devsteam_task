@@ -6,7 +6,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -21,7 +20,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Strings.appTitle, style: unsplash24,),
+        title: Text(Strings.appTitle, style: unsplash24),
       ),
       body: imagesGridWidget,
     );
