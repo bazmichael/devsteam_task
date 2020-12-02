@@ -1,4 +1,3 @@
-import 'package:devsteam/constraints/styles.dart';
 import 'package:devsteam/widgets/images_grid_widget.dart';
 import 'package:flutter/material.dart';
 
