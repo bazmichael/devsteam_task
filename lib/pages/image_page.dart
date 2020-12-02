@@ -19,55 +19,56 @@ class _ImagePageState extends State<ImagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Center(
               child: CachedNetworkImage(
-                  imageUrl: widget.vm?.fullImage ?? widget.vm.thumbImage, fit: BoxFit.fill)),
+                  imageUrl: widget.vm?.fullImage ?? widget.vm.thumbImage,
+                  fit: BoxFit.fill)),
           SlidingUpPanel(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(25), topLeft: Radius.circular(25)),
-            maxHeight: 200,
-            onPanelClosed: () {
-              setState(() {
-                widget.panelClosed = true;
-              });
-            },
-            onPanelOpened: () {
-              setState(() {
-                widget.panelClosed = false;
-              });
-            },
-            panel: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(widget.panelClosed
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward),
-                  ),
-                  Text(
-                    Strings.authorInfo(widget.vm.author),
-                    style: unsplash28,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.vm.title,
-                      style: unsplash24,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(25), topLeft: Radius.circular(25)),
+              maxHeight: 250,
+              onPanelClosed: () {
+                setState(() {
+                  widget.panelClosed = true;
+                });
+              },
+              onPanelOpened: () {
+                setState(() {
+                  widget.panelClosed = false;
+                });
+              },
+              panel: _panelBody(widget.panelClosed, vm: widget.vm))
         ],
       ),
     );
   }
 }
+
+Widget _panelBody(bool isClosed, {PhotoViewModel vm}) => Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(isClosed ? Icons.arrow_upward : Icons.arrow_downward),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              Strings.authorInfo(vm.author ?? Strings.unknown),
+              style: unsplash28,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              vm?.title ?? Strings.idleDescription,
+              style: unsplash24,
+            ),
+          ),
+        ],
+      ),
+    );
