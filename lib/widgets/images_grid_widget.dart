@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:devsteam/models/photo_vm.dart';
+import 'package:devsteam/pages/image_page.dart';
 import 'package:devsteam/providers/images_provider.dart';
 import 'package:devsteam/widgets/image_grid_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +26,4 @@ final imagesGridWidget = Container(
   ),
 ));
 
-class ImagePage extends StatelessWidget {
-  final PhotoViewModel vm;
 
-  ImagePage(this.vm) : assert(vm != null);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CachedNetworkImage(imageUrl: vm.fullImage, fit: BoxFit.fill),
-      appBar: AppBar(
-        title: Text(vm?.title ?? 'image description'),
-      ),
-    );
-  }
-}

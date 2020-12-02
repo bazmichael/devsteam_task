@@ -1,3 +1,4 @@
+import 'package:devsteam/constraints/styles.dart';
 import 'package:devsteam/widgets/images_grid_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primaryColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -20,7 +21,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('devsteam test task'),
+        title: Text(Strings.appTitle, style: unsplash24,),
       ),
       body: imagesGridWidget,
     );
