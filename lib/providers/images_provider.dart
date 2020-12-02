@@ -43,11 +43,23 @@ class HttpService {
 class ImagesProvider with ChangeNotifier {
   final _httpService = HttpService();
   final _images = <PhotoViewModel>[];
+  double pixels = 0.0;
+
 
   List<PhotoViewModel> get images => _images;
 
   ImagesProvider() {
     getPhotos();
+  }
+
+  bool onNotification(ScrollNotification notification) {
+    if (notification.metrics.maxScrollExtent == notification.metrics.pixels &&
+        pixels != notification.metrics.pixels) {
+      print('getting next 10 photos');
+      pixels = notification.metrics.pixels;
+      getPhotos();
+    }
+    return false;
   }
 
   Future<void> getPhotos() async {
@@ -57,6 +69,7 @@ class ImagesProvider with ChangeNotifier {
   }
 
   Future<bool> refresh() async {
+    pixels = 0.0;
     _images.clear();
     getPhotos();
     return true;

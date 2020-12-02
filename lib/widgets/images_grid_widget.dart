@@ -9,21 +9,24 @@ final imagesGridWidget = Container(
     child: Consumer<ImagesProvider>(
   builder: (context, provider, _) => RefreshIndicator(
     onRefresh: () => provider.refresh(),
-    child: GridView.builder(
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemCount: provider.images.length,
-      itemBuilder: (context, i) => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-            child: imageGridItem(provider.images[i].thumbImage),
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ImagePage(provider.images[i])))),
-      ),
+    child: NotificationListener<ScrollNotification>(
+      onNotification: (notification) => provider.onNotification(notification),
+      child: GridView.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemCount: provider.images.length,
+          itemBuilder: (context, i) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                  child: imageGridItem(provider.images[i].thumbImage),
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ImagePage(provider.images[i])))),
+            );
+          }),
     ),
   ),
 ));
-
-
