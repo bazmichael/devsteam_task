@@ -28,15 +28,18 @@ class HttpService {
     }
   }
 
-
   List<PhotoViewModel> _mapResponseToVm(List<UnsplashPhoto> photos) {
-    return photos.map((e) => PhotoViewModel(
-        author: e.user.name,
-        fullImage: e.urls.small,
-        thumbImage: e.urls.small,
-        title: e.altDescription)).toList(growable: false);
+    return photos
+        .map((e) => PhotoViewModel(
+            author: e.user.name,
+            fullImage: e.urls.small,
+            thumbImage: e.urls.small,
+            title: e.altDescription,
+            userAvatar: e.user.profileImage.small))
+        .toList(growable: false);
   }
 }
+
 class ImagesProvider with ChangeNotifier {
   final _httpService = HttpService();
   final _images = <PhotoViewModel>[];
@@ -44,7 +47,7 @@ class ImagesProvider with ChangeNotifier {
   List<PhotoViewModel> get images => _images;
 
   ImagesProvider() {
-   getPhotos();
+    getPhotos();
   }
 
   Future<void> getPhotos() async {
@@ -53,7 +56,7 @@ class ImagesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> refresh() async{
+  Future<bool> refresh() async {
     _images.clear();
     getPhotos();
     return true;
