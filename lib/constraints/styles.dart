@@ -12,8 +12,6 @@ const unsplash28 = TextStyle(
 );
 
 abstract class Strings {
-  static final appTitle = 'Unsplash photo gallery';
-  static final idleDescription = 'No description provided';
-  static final unknown = 'Unknown';
+  static final appTitle = 'Unsplash photos gallery';
   static authorInfo(String author) => 'Author: $author';
 }
